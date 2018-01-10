@@ -1,5 +1,7 @@
+alibaba.com
 aliexpress.com
 amazon.com
+ebay.com
 gmail.com
 google.com
 kijiji.com
@@ -7,6 +9,8 @@ linkedin.com
 microsoft.com
 outlook.com
 paypal.com
+t-mobile.com
 tesla.com
 utoronto.ca
+verizon.com
 yahoo.com
