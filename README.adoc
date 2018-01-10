@@ -50,3 +50,6 @@ Pull requests for "major" bigmailers will be gratefully accepted
 Please don't list your local public school or Cadillac dealer
 that has two mail servers,
 as most of the world will never get email from them.
+
+The original code contributions that made this possible
+are documented https://poolp.org/posts/2018-01-08/spfwalk/[here].
