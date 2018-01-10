@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# just do the walk, with our version, write to stdout. Stats?
+
+doas smtpctl spf walk < ./bigmailers.txt
