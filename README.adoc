@@ -1,11 +1,18 @@
 = bigmailer: OpenBSD _smtpctl spf walk_ starter kit
 
+This facility is listed as OpenBSD-specific as it depends on both
+the pf(8) facility and the smtpd(8) daemon's helper program, smtpctl(8).
+If you find a way to use this on other platforms, great - we'd love to be
+cross-platform.
+
+== Bit o' history
+
 When the internet was young, everybody ran their own mail server - singular.
 SPAM came along. GreyListing was one of several good responses to it.
 Then big mailers grew multiple servers AND were too lazy to implement
 "server affinity" - keep trying to send a given message from a given IP.
 Instead, they send a message from a randomly-chosen server each time they retry
-after the greylisting delays it... 
+after the greylisting delays it...
 This broke greylisting, as the message would come from a different IP each
 time, which would get added to the ever-growing grey list, but the message
 would rarely get through.
@@ -16,8 +23,11 @@ from. So now, smtpd's helper program smtpctl has the capability to
 read the SPF information from each of a list of "big mailer" domains, and
 list them in a form which our pfctl can accept.
 
+== How-to
+
 So assuming you have a file called _bigmailers.txt_
 (which you can get from this repo), you can just do
+something like this, either by hand or out of cron (daily/weekly?):
 
 	# smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
 
@@ -33,6 +43,10 @@ It is good that pf is very efficient at handling tables, as the very
 first verion of bigmailers.txt in this repo, 12 domains,
 generated almost 500 IP netgroups.
 
-Pull requests for "major" bigmailers will be gratefully accepted.
-Please don't list your local public school or Cadillac dealer 
-that has two mail servers.
+== Contribute
+
+Pull requests for "major" bigmailers will be gratefully accepted
+(keep the list in alphabetical order).
+Please don't list your local public school or Cadillac dealer
+that has two mail servers,
+as most of the world will never get email from them.
