@@ -2,7 +2,6 @@ alibaba.com
 aliexpress.com
 amazon.com
 ebay.com
-gmail.com
 google.com
 kijiji.com
 linkedin.com
