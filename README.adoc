@@ -1,7 +1,9 @@
 = bigmailer: OpenBSD _smtpctl spf walk_ starter kit
 
-This facility is listed as OpenBSD-specific as it depends on both
-the pf(8) facility and the smtpd(8) daemon's helper program, smtpctl(8).
+This facility is listed as https://openbsd.org[OpenBSD]-specific as it
+depends on both the pf(8) facility and the https://opensmtpd[smtpd(8)]
+daemon's helper program, smtpctl(8).  That said, the output of _smtpctl spf
+walk_ is text, and text is easy to reform.
 If you find a way to use this on other platforms, great - we'd love to be
 cross-platform.
 
@@ -18,19 +20,21 @@ time, which would get added to the ever-growing grey list, but the message
 would rarely get through.
 
 Fortunately, there's a solution to this problem too. Sender Policy Framework
-(SPF) requires mail senders to list all the hosts that their mail can come
-from. So now, smtpd's helper program smtpctl has the capability to
+(SPF) requires mail senders to list all the hosts (or groups, using CIDR notation)
+that their mail can come from.
+So now, smtpd's helper program smtpctl has the capability to
 read the SPF information from each of a list of "big mailer" domains, and
 list them in a form which our pfctl can accept.
 
 == How-to
 
 So assuming you have a file called _bigmailers.txt_
-(which you can get from this repo), you can just do
-something like this, either by hand or out of cron (daily/weekly?):
+(which you can get from this repo), you can just execute
+something like this, either by hand or out of cron (weekly?):
 
 	# smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
 
+This is what the _run_ script in the _scripts_ folder does.
 Assuming you have pf redirect incoming SMTP into greylisting, and you have
 a filter rule that bypasses hosts in the table spf-white, mail from
 the big mailers will come right in. Along with any SPAM they send, of course.
