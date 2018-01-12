@@ -1,4 +1,7 @@
-alibaba.com
+# A list of trusted large-volume sites that don't implement server affinity
+# on outgoing emails, thus breaking greylisting, but also implement
+# SPF so we can get an exhaustive list of their authorized smtp hosts.
+# Original from, updates avail:  https://github.com/IanDarwin/bigmailers/
 aliexpress.com
 amazon.com
 ebay.com
