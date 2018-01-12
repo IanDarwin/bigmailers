@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# just do the walk, with our version of file, write to stdout, with hostname
+# do the walk, with our version of file, write to stdout, with hostname
 
 FILE=./bigmailers.txt
 if [ ! -z "$1" ];then
