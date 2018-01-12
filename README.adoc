@@ -26,10 +26,17 @@ So now, smtpd's helper program smtpctl has the capability to
 read the SPF information from each of a list of "big mailer" domains, and
 list them in a form which our pfctl can accept.
 
-== How-to
+== HowTo for OpenBSD users
 
-So assuming you have a file called _bigmailers.txt_
-(which you can get from this repo), you can just execute
+TL:DR; for OpenBSD-current as of 2018-01-11, or 6.3+:
+
+. copy _bigmailers.txt_ to _/etc/mail/_;
+. Set a pf rule to let table _spf-white_ bypass the spamd redirection;
+. Install the body of _scripts/run_ in a weekly root cron entry or in /etc/weekly.local
+. Optionally use the scripts in _scripts_ for debugging/analysis.
+
+Assuming you have installed file called _bigmailers.txt_
+(from this repo) into /etc/mail, you can just execute
 something like this, either by hand or out of cron (weekly?):
 
 	# smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
@@ -43,9 +50,17 @@ the big mailers will come right in. Along with any SPAM they send, of course.
 	pass in quick on egress proto tcp from any to any port smtp \
 				 rdr-to 127.0.0.1 port spamd
 
-It is good that pf is very efficient at handling tables, as the very
+It is good that `pf` is very efficient at handling tables, as the very
 first verion of bigmailers.txt in this repo, 12 domains,
-generated almost 500 IP netgroups.
+generated almost 500 IP netgroups. After removing one redundant entry:
+
+	$ doas scripts/walk | wc -l
+		 451
+	$
+
+== HowTo for non-OpenBSD users
+
+This will be added when you contribute it.
 
 == Contribute
 
@@ -54,6 +69,9 @@ Pull requests for "major" bigmailers will be gratefully accepted
 Please don't list your local public school or Cadillac dealer
 that has two mail servers,
 as most of the world will never get email from them.
+
+Pulls for making things work on other platforms will also be considered,
+as long as they don't detract from the main focus.
 
 The original code contributions that made this possible
 are documented https://poolp.org/posts/2018-01-08/spfwalk/[here].
