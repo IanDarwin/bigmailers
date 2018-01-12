@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# just do the walk, with our version of file, write to stdout, with hostname
+
+FILE=./bigmailers.txt
+if [ ! -z "$1" ];then
+	FILE=$1
+fi
+if [ ! -r ${FILE} ]; then
+	echo $0: ${FILE} not readable
+	exit 1
+fi
+
+[ -w / ] || {
+	echo $0 must run as root since smtpctl does >&2
+	exit 1
+}
+
+while read domain junk
+do
+	echo ${domain} | smtpctl spf walk |sed -e "s/^/${domain}: /"
+done < ${FILE}
