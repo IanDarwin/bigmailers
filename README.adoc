@@ -1,7 +1,7 @@
 = bigmailer: OpenBSD _smtpctl spf walk_ starter kit
 
 This facility is listed as https://openbsd.org[OpenBSD]-specific as it
-depends on both the pf(8) facility and the https://opensmtpd[smtpd(8)]
+depends on both the pf(8) facility and the https://opensmtpd.org[smtpd(8)]
 daemon's helper program, smtpctl(8).  That said, the output of _smtpctl spf
 walk_ is text, and text is easy to reform.
 If you find a way to use this on other platforms, great - we'd love to be
