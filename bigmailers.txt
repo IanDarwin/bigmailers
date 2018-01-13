@@ -8,6 +8,8 @@ ebay.com
 google.com
 kijiji.com
 linkedin.com
+mandrillapp.com
+mailchimp.com
 microsoft.com
 outlook.com
 paypal.com
