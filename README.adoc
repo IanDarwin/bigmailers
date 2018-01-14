@@ -41,17 +41,22 @@ something like this, either by hand or out of cron (weekly?):
 
 	# smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
 
+or, if you want to keep this file intact and add a bigmailers-local.txt:
+
+	# cat /etc/mail/bigmailers*.txt | smtpctl spf walk | pfctl -t spf-white -T add -f -
+
 This is what the _run_ script in the _scripts_ folder does.
 Assuming you have pf redirect incoming SMTP into greylisting, and you have
 a filter rule that bypasses hosts in the table spf-white, mail from
-the big mailers will come right in. Along with any SPAM they send, of course.
+the big mailers will come right in. 
+Along with any SPAM their customers send, of course.
 
 	pass in quick on egress proto tcp from <spf-white> to any port smtp
 	pass in quick on egress proto tcp from any to any port smtp \
 				 rdr-to 127.0.0.1 port spamd
 
 It is good that `pf` is very efficient at handling tables, as the very
-first verion of bigmailers.txt in this repo, 12 domains,
+first version of bigmailers.txt in this repo, 12 domains,
 generated almost 500 IP netgroups. After removing one redundant entry:
 
 	$ doas scripts/walk | wc -l

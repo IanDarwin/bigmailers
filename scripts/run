@@ -1,3 +1,5 @@
 #!/bin/ksh
 
-smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
+cat /etc/mail/bigmailers*.txt | 
+	smtpctl spf walk |
+		pfctl -t spf-white -T add -f -
