@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# lsd - list domain (to see if it has drugged-out SPF record)
+
+host -t txt $1 | grep spf
