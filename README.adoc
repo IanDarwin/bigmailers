@@ -41,17 +41,22 @@ something like this, either by hand or out of cron (weekly?):
 
 	# smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
 
+or, if you want to keep this file intact and add a bigmailers-local.txt:
+
+	# cat /etc/mail/bigmailers*.txt | smtpctl spf walk | pfctl -t spf-white -T add -f -
+
 This is what the _run_ script in the _scripts_ folder does.
 Assuming you have pf redirect incoming SMTP into greylisting, and you have
 a filter rule that bypasses hosts in the table spf-white, mail from
-the big mailers will come right in. Along with any SPAM they send, of course.
+the big mailers will come right in. 
+Along with any SPAM their customers send, of course.
 
 	pass in quick on egress proto tcp from <spf-white> to any port smtp
 	pass in quick on egress proto tcp from any to any port smtp \
 				 rdr-to 127.0.0.1 port spamd
 
 It is good that `pf` is very efficient at handling tables, as the very
-first verion of bigmailers.txt in this repo, 12 domains,
+first version of bigmailers.txt in this repo, 12 domains,
 generated almost 500 IP netgroups. After removing one redundant entry:
 
 	$ doas scripts/walk | wc -l
@@ -64,11 +69,20 @@ This will be added when you contribute it.
 
 == Contribute
 
-Pull requests for "major" bigmailers will be gratefully accepted
-(keep the list in alphabetical order).
-Please don't list your local public school or Cadillac dealer
+Pull requests for "major" bigmailers that don't do server affinity 
+will be gratefully accepted, as long as they:
+
+. keep the list in alphabetical order;
+. don't list your local public school or Cadillac dealer
 that has two mail servers,
-as most of the world will never get email from them.
+as most of the world will never get email from them;
+. provide proof in the comments field, such as spamd output showing
+two more more different IPs trying to send the same message, like so:
+
+----
+Jan 13 17:32:13 darwinsys spamd[24416]: (GREY) 1.2.3.187: <spammer@bigmailer.com> -> <covfefe123@darwinsys.com>
+Jan 13 17:38:63 darwinsys spamd[24416]: (GREY) 1.2.3.167: <spammer@bigmailer.com> -> <covfefe123@darwinsys.com>
+----
 
 Pulls for making things work on other platforms will also be considered,
 as long as they don't detract from the main focus.
