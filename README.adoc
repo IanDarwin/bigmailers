@@ -36,16 +36,16 @@ TL:DR; for OpenBSD-current as of 2018-01-11, or 6.3+:
 . Optionally use the scripts in _scripts_ for debugging/analysis.
 
 Assuming you have installed file called _bigmailers.txt_
-(from this repo) into /etc/mail, you can just execute
-something like this, either by hand or out of cron (weekly?):
-
-	# smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
-
-or, if you want to keep this file intact and add a bigmailers-local.txt:
+(from this repo) into /etc/mail, and maintain your local changes in bigmailers-local.txt,
+you can just execute something like this, either by hand or out of cron (weekly?):
 
 	# cat /etc/mail/bigmailers*.txt | smtpctl spf walk | pfctl -t spf-white -T add -f -
 
-This is what the _run_ script in the _scripts_ folder does.
+or, if you don't want a local set:
+
+	# smtpctl spf walk < /etc/mail/bigmailers.txt | pfctl -t spf-white -T add -f -
+
+The first form is what the _run_ script in the _scripts_ folder does.
 Assuming you have pf redirect incoming SMTP into greylisting, and you have
 a filter rule that bypasses hosts in the table spf-white, mail from
 the big mailers will come right in. 
@@ -80,8 +80,8 @@ as most of the world will never get email from them;
 two more more different IPs trying to send the same message, like so:
 
 ----
-Jan 13 17:32:13 darwinsys spamd[24416]: (GREY) 1.2.3.187: <spammer@bigmailer.com> -> <covfefe123@darwinsys.com>
-Jan 13 17:38:63 darwinsys spamd[24416]: (GREY) 1.2.3.167: <spammer@bigmailer.com> -> <covfefe123@darwinsys.com>
+Jan 13 17:32:13 darwinsys spamd[24416]: (GREY) 1.2.3.123: <spammer@bigmailer.com> -> <covfefe123@darwinsys.com>
+Jan 13 17:38:63 darwinsys spamd[24416]: (GREY) 1.2.3.456: <spammer@bigmailer.com> -> <covfefe123@darwinsys.com>
 ----
 
 Pulls for making things work on other platforms will also be considered,
