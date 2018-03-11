@@ -3,18 +3,19 @@
 # just do the walk, with our version, write to stdout. 
 # Used for stats, debugging, etc.
 
-FILE=./bigmailers.txt
-if [ ! -z "$1" ];then
-	FILE=$1
-fi
-if [ ! -r ${FILE} ]; then
-	echo $0: ${FILE} not readable
-	exit 1
-fi
-
 [ -w / ] || {
 	echo $0 must run as root since smtpctl does >&2
 	exit 1
 }
 
-smtpctl spf walk < ${FILE}
+FILE=./bigmailers.txt
+if [ ! -z "$1" ];then
+	FILE=$1
+fi
+if [ ! -r ${FILE} ]; then
+	echo $0: ${FILE} not readable, treating as domain
+	echo ${FILE} | smtpctl spf walk
+else
+	smtpctl spf walk < ${FILE}
+fi
+
