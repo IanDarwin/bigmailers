@@ -5,6 +5,7 @@
 aliexpress.com
 amazon.com
 ebay.com
+github.com
 google.com
 kijiji.com
 linkedin.com

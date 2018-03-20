@@ -84,6 +84,8 @@ Jan 13 17:32:13 darwinsys spamd[24416]: (GREY) 1.2.3.123: <spammer@bigmailer.com
 Jan 13 17:38:63 darwinsys spamd[24416]: (GREY) 1.2.3.456: <spammer@bigmailer.com> -> <covfefe123@darwinsys.com>
 ----
 
+Alternately, big or important sites may be listed just to stop greylisting them.
+
 Pulls for making things work on other platforms will also be considered,
 as long as they don't detract from the main focus.
 
