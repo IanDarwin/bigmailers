@@ -4,6 +4,7 @@
 # Original from, updates avail:  https://github.com/IanDarwin/bigmailers/
 aliexpress.com
 amazon.com
+apple.com
 ebay.com
 github.com
 google.com
