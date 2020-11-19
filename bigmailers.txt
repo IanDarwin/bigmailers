@@ -13,9 +13,12 @@ linkedin.com
 mandrillapp.com
 mailchimp.com
 microsoft.com
+openbsd.org
+oracle.com
 outlook.com
 paypal.com
 sendgrid.net
+slashdot.org
 t-mobile.com
 verizon.com
 yahoo.com
